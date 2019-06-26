@@ -1,0 +1,152 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"description": "La Compañia Plateada - Places",
+		"version": "1.0.0",
+		"title": "La Compañia Plateada - Places",
+		"contact": {
+			"email": "alinares@paradigmadigital.com"
+		}
+	},
+	"tags": [
+		{
+			"name": "Places",
+			"description": "La Compañia Plateada - Places"
+		}
+	],
+	"paths": {
+		"/v1/places": {
+			"get": {
+				"tags": [
+					"Places"
+				],
+				"summary": "Returns All Places",
+				"responses": {
+					"200": {
+						"description": "OK"
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"Places"
+				],
+				"summary": "Create Place",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "name",
+						"required": true,
+						"description": "Place Name",
+						"schema": {
+							"type": "object"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"404": {
+						"description": "Failed. Misunderstood Request."
+					}
+				}
+			}
+		},
+		"/v1/places/{id}": {
+			"get": {
+				"tags": [
+					"Place By ID"
+				],
+				"summary": "Get Place request with given ID",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"description": "Place Request id",
+						"schema": {
+							"type": "integer"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					"400": {
+						"description": "Failed. Misunderstood Request."
+					},
+					"404": {
+						"description": "Failed. Place request not found."
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"Place By ID"
+				],
+				"summary": "Update Place",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"description": "Place ID",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					{
+						"in": "body",
+						"name": "name",
+						"required": true,
+						"description": "Place Update Name",
+						"schema": {
+							"type": "object"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"404": {
+						"description": "Failed. Misunderstood Request."
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"Place By ID"
+				],
+				"summary": "Delete Place request with given ID",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"description": "Place Request id",
+						"schema": {
+							"type": "integer"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "integer"
+						}
+					},
+					"400": {
+						"description": "Failed. Misunderstood Request."
+					}
+				}
+			}
+		}
+	}
+}
