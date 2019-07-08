@@ -24,6 +24,9 @@
 				"responses": {
 					"200": {
 						"description": "OK"
+					},
+					"404": {
+						"description": "Not Found"
 					}
 				}
 			},
@@ -44,11 +47,11 @@
 					}
 				],
 				"responses": {
-					"200": {
+					"201": {
 						"description": "OK"
 					},
 					"404": {
-						"description": "Failed. Misunderstood Request."
+						"description": "Not Found"
 					}
 				}
 			}
@@ -77,11 +80,8 @@
 							"type": "integer"
 						}
 					},
-					"400": {
-						"description": "Failed. Misunderstood Request."
-					},
 					"404": {
-						"description": "Failed. Place request not found."
+						"description": "Not Found."
 					}
 				}
 			},
@@ -111,11 +111,11 @@
 					}
 				],
 				"responses": {
-					"200": {
-						"description": "OK"
+					"201": {
+						"description": "Created"
 					},
 					"404": {
-						"description": "Failed. Misunderstood Request."
+						"description": "Not Found"
 					}
 				}
 			},
@@ -142,8 +142,8 @@
 							"type": "integer"
 						}
 					},
-					"400": {
-						"description": "Failed. Misunderstood Request."
+					"404": {
+						"description": "Not Found"
 					}
 				}
 			}

@@ -8,9 +8,8 @@ from .models import db
 from . import place
 
 def create_app(config_name):
-   app = Flask(__name__, instance_relative_config=True)
+   app = Flask(__name__, instance_relative_config = True)
    app.config.from_object(app_config[config_name])
-   app.config.from_pyfile('config.py')
    app.add_url_rule('/', endpoint='index')
    app.config['JSON_AS_ASCII'] = False
    app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
