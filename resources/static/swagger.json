@@ -4,10 +4,20 @@
 		"description": "La Compañia Plateada - Places",
 		"version": "1.0.0",
 		"title": "La Compañia Plateada - Places",
+		"license": {
+			"name": "MIT"
+		},
 		"contact": {
 			"email": "alinares@paradigmadigital.com"
 		}
 	},
+	"basePath": "/v1",
+	"consumes": [
+		"application/json"
+	],
+	"produces": [
+		"application/json"
+	],
 	"tags": [
 		{
 			"name": "Places",
@@ -15,7 +25,7 @@
 		}
 	],
 	"paths": {
-		"/v1/places": {
+		"/places": {
 			"get": {
 				"tags": [
 					"Places"
@@ -24,9 +34,6 @@
 				"responses": {
 					"200": {
 						"description": "OK"
-					},
-					"404": {
-						"description": "Not Found"
 					}
 				}
 			},
@@ -42,21 +49,21 @@
 						"required": true,
 						"description": "Place Name",
 						"schema": {
-							"type": "object"
+							"$ref": "#/definitions/Place"
 						}
 					}
 				],
 				"responses": {
 					"201": {
-						"description": "OK"
+						"description": "Created"
 					},
-					"404": {
-						"description": "Not Found"
+					"400": {
+						"description": "Bad Request"
 					}
 				}
 			}
 		},
-		"/v1/places/{id}": {
+		"/places/{id}": {
 			"get": {
 				"tags": [
 					"Place By ID"
@@ -106,7 +113,7 @@
 						"required": true,
 						"description": "Place Update Name",
 						"schema": {
-							"type": "object"
+							"$ref": "#/definitions/Place"
 						}
 					}
 				],
@@ -145,6 +152,17 @@
 					"404": {
 						"description": "Not Found"
 					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"Place": {
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string",
+					"enum": [ "Mesopotamia" ]
 				}
 			}
 		}
