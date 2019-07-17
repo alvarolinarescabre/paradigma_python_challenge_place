@@ -1,6 +1,7 @@
 from flask import jsonify, abort
 from flask_restful import Resource, reqparse, fields, marshal
 from .models import Places, db
+import json
 
 place_fields = {
     'id':   fields.Integer,
@@ -22,7 +23,7 @@ class Place(Resource):
         db.session.commit()
                
         if create_place:
-            return 'Successful'
+            return json.dumps({'success':True}), 201, {'ContentType':'application/json'} 
         else:
             abort(400, 'Bad Request')
     
@@ -36,25 +37,31 @@ class PlaceById(Resource):
         if json:
             return jsonify(json)
         else:
-            abort(404, 'Place not found')
+            abort(404, 'Not Found')
 
     def put(self, id):
         id_parser = reqparse.RequestParser()
         id_parser.add_argument('id', location='view_args', required = True)
         id_args = id_parser.parse_args()
         
-        name_parser = reqparse.RequestParser()
-        name_parser.add_argument('name', location='json', required = True)
-        name_args = name_parser.parse_args()
+        get_place_id = db.session.query(Places.id).filter(Places.id == id_args['id'])
+        place_id = get_place_id.first()
         
-        update_place = Places.query.get(id_args['id'])
-        update_place.name = name_args['name']
-        db.session.commit()
-       
-        if update_place:
-            return 'Successful'
+        if place_id:
+            name_parser = reqparse.RequestParser()
+            name_parser.add_argument('name', location='json', required = True)
+            name_args = name_parser.parse_args()
+            
+            update_place = Places.query.get(id_args['id'])
+            update_place.name = name_args['name']
+            db.session.commit()
+            
+            if update_place:
+                return json.dumps({'success':True}), 201, {'ContentType':'application/json'} 
+            else:
+                abort(400, 'Bad Request')
         else:
-            abort(400, 'Bad Request')
+            abort(404, 'Not Found')
             
     def delete(self, id):
         id_parser = reqparse.RequestParser()
@@ -65,6 +72,6 @@ class PlaceById(Resource):
         db.session.commit()
        
         if delete_place:
-            return 'Successful'
+            return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
         else:
-            abort(400, 'Bad Request')
+            abort(404, 'Not Found')
