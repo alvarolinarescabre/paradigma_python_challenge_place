@@ -1,6 +1,6 @@
 from flask import jsonify, abort
 from flask_restful import Resource, reqparse, fields, marshal
-from .models import Places, db
+from .models import Places, db, IntegrityError
 import json
 
 place_fields = {
@@ -19,8 +19,12 @@ class Place(Resource):
         args = parser.parse_args()
         
         create_place = Places(name = args['name'])
-        db.session.add(create_place)
-        db.session.commit()
+        
+        try:
+            db.session.add(create_place)
+            db.session.commit()
+        except IntegrityError:
+                abort(409, 'Conflict')
                
         if create_place:
             return json.dumps({'success':True}), 201, {'ContentType':'application/json'} 
@@ -54,7 +58,11 @@ class PlaceById(Resource):
             
             update_place = Places.query.get(id_args['id'])
             update_place.name = name_args['name']
-            db.session.commit()
+            
+            try:
+                db.session.commit()
+            except IntegrityError:
+                abort(409, 'Conflict')
             
             if update_place:
                 return json.dumps({'success':True}), 201, {'ContentType':'application/json'} 
