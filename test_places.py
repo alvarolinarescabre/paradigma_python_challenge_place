@@ -22,15 +22,15 @@ class PlacesTestCase(unittest.TestCase):
 
         return id_test
 
-    def test_step_1_Places_creation(self):
+    def test_step_1_places_creation(self):
         res = self.client().post('/v1/places', data=json.dumps(self.place_create), content_type='application/json')
         self.assertEqual(res.status_code, 201)
 
-    def test_step_2_Places_get_all(self):
+    def test_step_2_places_get_all(self):
         res = self.client().get('/v1/places', content_type='application/json')
         self.assertEqual(res.status_code, 200)
 
-    def test_step_3_Places_by_id(self):
+    def test_step_3_places_by_id(self):
         id_test = self.returnId(self.place_create['name'])
         
         res = self.client().get(
@@ -38,7 +38,7 @@ class PlacesTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertIn('Borabora', str(res.data))
 
-    def test_step_4_Places_edited(self):
+    def test_step_4_places_edited(self):
         id_test = self.returnId(self.place_create['name'])
 
         res = self.client().put('/v1/places/{}'.format(id_test),
@@ -50,7 +50,7 @@ class PlacesTestCase(unittest.TestCase):
                                 content_type='application/json')
         self.assertIn(self.place_update['name'], str(res.data))
 
-    def test_step_5_Places_deletion(self):
+    def test_step_5_places_deletion(self):
         id_test = self.returnId(self.place_update['name'])
         
         res = self.client().delete(
